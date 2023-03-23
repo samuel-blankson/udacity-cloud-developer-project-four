@@ -77,10 +77,10 @@ export class TodosAccess {
         })
         .promise()
 
-        return todoUpdate
+        return todoUpdate as TodoUpdate
     }
 
-    async deleteTodoItem(todoId: string, userId: string): Promise<void> {
+    async deleteTodoItem(todoId: string, userId: string): Promise<string> {
         logger.info('Delete todo item function called')
 
         await this.doClient
@@ -92,6 +92,8 @@ export class TodosAccess {
             }
         })
         .promise()
+
+        return todoId as string
     }
 
 
