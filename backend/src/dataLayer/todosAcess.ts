@@ -58,7 +58,7 @@ export class TodosAccess {
     ): Promise<TodoUpdate> {
         logger.info('Update todo item function called')
 
-        await this.doClient
+       const result = await this.doClient
         .update({
             TableName: this.todosTable,
             Key: {
@@ -73,11 +73,13 @@ export class TodosAccess {
             },
             ExpressionAttributeNames: {
                 '#name': 'name'
-            }
+            },
+            ReturnValues: 'ALL_NEW'
         })
         .promise()
-
-        return todoUpdate as TodoUpdate
+        const todoItemUpdate = result.Attributes as TodoUpdate
+        logger.info('Todo item is updated', result)
+        return todoItemUpdate as TodoUpdate
     }
 
     async deleteTodoItem(todoId: string, userId: string): Promise<string> {
